@@ -119,6 +119,10 @@
 		25ECC0A41AFBDD2700F3D63B /* ORKReactionTimeStimulusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25ECC0A21AFBDD2700F3D63B /* ORKReactionTimeStimulusView.m */; };
 		2EBFE11D1AE1B32D00CB8254 /* ORKUIViewAccessibilityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFE11C1AE1B32D00CB8254 /* ORKUIViewAccessibilityTests.m */; };
 		2EBFE1201AE1B74100CB8254 /* ORKVoiceEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFE11F1AE1B74100CB8254 /* ORKVoiceEngineTests.m */; };
+		3BF7B4151F8E4C16006CE97C /* ActiwiseScaleSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BF7B4131F8E4C16006CE97C /* ActiwiseScaleSlider.h */; };
+		3BF7B4161F8E4C16006CE97C /* ActiwiseScaleSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7B4141F8E4C16006CE97C /* ActiwiseScaleSlider.m */; };
+		3BF7B4191F8E4D30006CE97C /* ActiwiseScaleSliderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BF7B4171F8E4D30006CE97C /* ActiwiseScaleSliderView.h */; };
+		3BF7B41A1F8E4D30006CE97C /* ActiwiseScaleSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7B4181F8E4D30006CE97C /* ActiwiseScaleSliderView.m */; };
 		6146D0A31B84A91E0068491D /* ORKLineGraphAccessibilityElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 6146D0A11B84A91E0068491D /* ORKLineGraphAccessibilityElement.h */; };
 		6146D0A41B84A91E0068491D /* ORKLineGraphAccessibilityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6146D0A21B84A91E0068491D /* ORKLineGraphAccessibilityElement.m */; };
 		618DA04E1A93D0D600E63AA8 /* ORKAccessibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 618DA0481A93D0D600E63AA8 /* ORKAccessibility.h */; };
@@ -709,6 +713,10 @@
 		2EBFE11C1AE1B32D00CB8254 /* ORKUIViewAccessibilityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKUIViewAccessibilityTests.m; sourceTree = "<group>"; };
 		2EBFE11E1AE1B68800CB8254 /* ORKVoiceEngine_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ORKVoiceEngine_Internal.h; sourceTree = "<group>"; };
 		2EBFE11F1AE1B74100CB8254 /* ORKVoiceEngineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKVoiceEngineTests.m; sourceTree = "<group>"; };
+		3BF7B4131F8E4C16006CE97C /* ActiwiseScaleSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActiwiseScaleSlider.h; sourceTree = "<group>"; };
+		3BF7B4141F8E4C16006CE97C /* ActiwiseScaleSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActiwiseScaleSlider.m; sourceTree = "<group>"; };
+		3BF7B4171F8E4D30006CE97C /* ActiwiseScaleSliderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActiwiseScaleSliderView.h; sourceTree = "<group>"; };
+		3BF7B4181F8E4D30006CE97C /* ActiwiseScaleSliderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActiwiseScaleSliderView.m; sourceTree = "<group>"; };
 		6146D0A11B84A91E0068491D /* ORKLineGraphAccessibilityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKLineGraphAccessibilityElement.h; sourceTree = "<group>"; };
 		6146D0A21B84A91E0068491D /* ORKLineGraphAccessibilityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKLineGraphAccessibilityElement.m; sourceTree = "<group>"; };
 		618DA0481A93D0D600E63AA8 /* ORKAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKAccessibility.h; sourceTree = "<group>"; };
@@ -2020,8 +2028,12 @@
 				CBD34A551BB1FB9000F204EA /* ORKLocationSelectionView.m */,
 				861D11A71AA691BB003C98A7 /* ORKScaleSliderView.h */,
 				861D11A81AA691BB003C98A7 /* ORKScaleSliderView.m */,
+				3BF7B4171F8E4D30006CE97C /* ActiwiseScaleSliderView.h */,
+				3BF7B4181F8E4D30006CE97C /* ActiwiseScaleSliderView.m */,
 				86C40BAE1A8D7C5C00081FAC /* ORKScaleSlider.h */,
 				86C40BAF1A8D7C5C00081FAC /* ORKScaleSlider.m */,
+				3BF7B4131F8E4C16006CE97C /* ActiwiseScaleSlider.h */,
+				3BF7B4141F8E4C16006CE97C /* ActiwiseScaleSlider.m */,
 				865EA1601AB8DF750037C68E /* ORKDateTimePicker.h */,
 				865EA1611AB8DF750037C68E /* ORKDateTimePicker.m */,
 				865EA1661ABA1AA10037C68E /* ORKPicker.h */,
@@ -2716,6 +2728,7 @@
 				866DA5271D63D04700C9AF3F /* ORKMotionActivityQueryOperation.h in Headers */,
 				106FF2B41B71F18E004EACF2 /* ORKHolePegTestPlaceHoleView.h in Headers */,
 				86C40D921A8D7C5C00081FAC /* ORKStep_Private.h in Headers */,
+				3BF7B4191F8E4D30006CE97C /* ActiwiseScaleSliderView.h in Headers */,
 				86C40CC41A8D7C5C00081FAC /* ORKCompletionStepViewController.h in Headers */,
 				FF36A49C1D1A15FC00DE8470 /* ORKTableStepViewController_Internal.h in Headers */,
 				86C40D7C1A8D7C5C00081FAC /* ORKScaleValueLabel.h in Headers */,
@@ -2844,6 +2857,7 @@
 				86C40D6E1A8D7C5C00081FAC /* ORKResult_Private.h in Headers */,
 				781D54121DF886AB00223305 /* ORKTrailmakingStep.h in Headers */,
 				86C40D161A8D7C5C00081FAC /* ORKErrors.h in Headers */,
+				3BF7B4151F8E4C16006CE97C /* ActiwiseScaleSlider.h in Headers */,
 				866DA5291D63D04700C9AF3F /* ORKOperation.h in Headers */,
 				861D11B51AA7D073003C98A7 /* ORKTextChoiceCellGroup.h in Headers */,
 				24BC5CEE1BC345D900846B43 /* ORKLoginStep.h in Headers */,
@@ -3107,6 +3121,7 @@
 				959A2BFD1D68B98700841B04 /* ORKRangeOfMotionStep.m in Sources */,
 				BCB6E6531B7D533B000D5B34 /* ORKPieChartLegendCell.m in Sources */,
 				866DA52A1D63D04700C9AF3F /* ORKOperation.m in Sources */,
+				3BF7B41A1F8E4D30006CE97C /* ActiwiseScaleSliderView.m in Sources */,
 				86C40D8C1A8D7C5C00081FAC /* ORKSkin.m in Sources */,
 				86C40D221A8D7C5C00081FAC /* ORKFormStep.m in Sources */,
 				10FF9ACC1B79F22900ECB5B4 /* ORKHolePegTestRemoveStepViewController.m in Sources */,
@@ -3222,6 +3237,7 @@
 				86C40C6C1A8D7C5C00081FAC /* CMDeviceMotion+ORKJSONDictionary.m in Sources */,
 				86C40DF01A8D7C5C00081FAC /* UIResponder+ResearchKit.m in Sources */,
 				865EA16D1ABA1BE20037C68E /* ORKSurveyAnswerCellForPicker.m in Sources */,
+				3BF7B4161F8E4C16006CE97C /* ActiwiseScaleSlider.m in Sources */,
 				BF9155AA1BDE8DA9007FA459 /* ORKWaitStepView.m in Sources */,
 				86C40D261A8D7C5C00081FAC /* ORKFormStepViewController.m in Sources */,
 				BC5FAF851C6901A200057CF1 /* ORKChartTypes.m in Sources */,
