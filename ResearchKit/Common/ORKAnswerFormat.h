@@ -40,6 +40,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class ORKScaleAnswerFormat;
+@class ORKCATScaleAnswerFormat;
 @class ORKContinuousScaleAnswerFormat;
 @class ORKTextScaleAnswerFormat;
 @class ORKValuePickerAnswerFormat;
@@ -114,6 +115,14 @@ ORK_CLASS_AVAILABLE
 + (ORKTextScaleAnswerFormat *)textScaleAnswerFormatWithTextChoices:(NSArray <ORKTextChoice *> *)textChoices
                                                       defaultIndex:(NSInteger)defaultIndex
                                                           vertical:(BOOL)vertical;
+
++ (ORKCATScaleAnswerFormat *)catScaleAnswerFormatWithMaximumValue:(NSInteger)scaleMaximum
+                                               minimumValue:(NSInteger)scaleMinimum
+                                               defaultValue:(NSInteger)defaultValue
+                                                       step:(NSInteger)step
+                                                   vertical:(BOOL)vertical
+                                    maximumValueDescription:(nullable NSString *)maximumValueDescription
+                                    minimumValueDescription:(nullable NSString *)minimumValueDescription;
 
 + (ORKBooleanAnswerFormat *)booleanAnswerFormat;
 
@@ -356,6 +365,180 @@ ORK_CLASS_AVAILABLE
  Indicates the position of gradient stops for the colors specified in `gradientColors`.
  Gradient stops are specified as values between 0 and 1. The values must be monotonically
  increasing. 
+ 
+ If nil, the stops are spread uniformly across the range. Defaults to nil.
+ */
+@property (copy, nullable) NSArray<NSNumber *> *gradientLocations;
+
+@end
+
+
+//TODO: change to fit for actiwise UI
+
+/**
+ The `ORKCATScaleAnswerFormat `class represents an answer format that includes a slider control.
+ 
+ The scale answer format produces an `ORKScaleQuestionResult` object that contains an integer whose
+ value is between the scale's minimum and maximum values, and represents one of the quantized step
+ values.
+ 
+ The following are the rules bound with scale answer format -
+ 
+ * Minimum number of step in a task should not be less than 1.
+ * Minimum number of section on a scale (step count) should not be less than 1.
+ * Maximum number of section on a scale (step count) should not be more than 13.
+ * The lower bound value in scale answer format cannot be lower than - 10000.
+ * The upper bound value in scale answer format cannot be more than 10000.
+ 
+ */
+ORK_CLASS_AVAILABLE
+@interface ORKCATScaleAnswerFormat : ORKAnswerFormat
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
+/**
+ Returns an initialized scale answer format using the specified values.
+ 
+ This method is the designated initializer.
+ 
+ @param maximumValue                The upper bound of the scale.
+ @param minimumValue                The lower bound of the scale.
+ @param defaultValue                The default value of the scale. If this value is out of range,
+ the slider is displayed without a default value.
+ @param step                        The size of each discrete offset on the scale.
+ @param vertical                    Pass `YES` to use a vertical scale; for the default horizontal
+ scale, pass `NO`.
+ @param maximumValueDescription     A localized label to describe the maximum value of the scale.
+ For none, pass `nil`.
+ @param minimumValueDescription     A localized label to describe the minimum value of the scale.
+ For none, pass `nil`.
+ 
+ @return An initialized scale answer format.
+ */
+- (instancetype)initWithMaximumValue:(NSInteger)maximumValue
+                        minimumValue:(NSInteger)minimumValue
+                        defaultValue:(NSInteger)defaultValue
+                                step:(NSInteger)step
+                            vertical:(BOOL)vertical
+             maximumValueDescription:(nullable NSString *)maximumValueDescription
+             minimumValueDescription:(nullable NSString *)minimumValueDescription NS_DESIGNATED_INITIALIZER;
+
+
+/**
+ Returns an initialized scale answer format using the specified values.
+ 
+ This method is a convenience initializer.
+ 
+ @param maximumValue    The upper bound of the scale.
+ @param minimumValue    The lower bound of the scale.
+ @param defaultValue    The default value of the scale. If this value is out of range, the slider is
+ displayed without a default value.
+ @param step            The size of each discrete offset on the scale.
+ @param vertical        Pass `YES` to use a vertical scale; for the default horizontal scale,
+ pass `NO`.
+ 
+ @return An initialized scale answer format.
+ */
+- (instancetype)initWithMaximumValue:(NSInteger)maximumValue
+                        minimumValue:(NSInteger)minimumValue
+                        defaultValue:(NSInteger)defaultValue
+                                step:(NSInteger)step
+                            vertical:(BOOL)vertical;
+
+/**
+ Returns an initialized horizontal scale answer format using the specified values.
+ 
+ This method is a convenience initializer.
+ 
+ @param maximumValue    The upper bound of the scale.
+ @param minimumValue    The lower bound of the scale.
+ @param defaultValue    The default value of the scale. If this value is out of range, the slider is
+ displayed without a default value.
+ @param step            The size of each discrete offset on the scale.
+ 
+ @return An initialized scale answer format.
+ */
+- (instancetype)initWithMaximumValue:(NSInteger)maximumValue
+                        minimumValue:(NSInteger)minimumValue
+                        defaultValue:(NSInteger)defaultValue
+                                step:(NSInteger)step;
+
+/**
+ The upper bound of the scale. (read-only)
+ */
+@property (readonly) NSInteger maximum;
+
+/**
+ The lower bound of the scale. (read-only)
+ */
+@property (readonly) NSInteger minimum;
+
+/**
+ The size of each discrete offset on the scale. (read-only)
+ 
+ The value of this property should be greater than zero.
+ The difference between `maximumValue` and `minimumValue` should be divisible
+ by the step value.
+ */
+@property (readonly) NSInteger step;
+
+/**
+ The default value for the slider. (read-only)
+ 
+ If the value of this property is less than `minimum` or greater than `maximum`, the slider has no
+ default. Otherwise, the value is rounded to the nearest valid `step` value.
+ */
+@property (readonly) NSInteger defaultValue;
+
+/**
+ A Boolean value indicating whether the scale is oriented vertically. (read-only)
+ */
+@property (readonly, getter=isVertical) BOOL vertical;
+
+/**
+ Number formatter applied to the minimum, maximum, and slider values. Can be overridden by
+ subclasses.
+ */
+@property (readonly) NSNumberFormatter *numberFormatter;
+
+/**
+ A localized label to describe the maximum value of the scale. (read-only)
+ */
+@property (readonly, nullable) NSString *maximumValueDescription;
+
+/**
+ A localized label to describe the minimum value of the scale. (read-only)
+ */
+@property (readonly, nullable) NSString *minimumValueDescription;
+
+/**
+ An image for the upper bound of the slider. The recommended image size is 30 x 30 points.
+ The maximum range label will not be visible.
+ */
+@property (strong, nullable) UIImage *maximumImage;
+
+/**
+ An image for the lower bound of the slider. The recommended image size is 30 x 30 points.
+ The minimum range label will not be visible.
+ */
+@property (strong, nullable) UIImage *minimumImage;
+
+/**
+ The colors to use when drawing a color gradient above the slider. Colors are drawn such that
+ lower indexes correspond to the minimum side of the scale, while colors at higher indexes in
+ the array corresond to the maximum side of the scale.
+ 
+ Setting this value to nil results in no gradient being drawn. Defaults to nil.
+ 
+ An example usage would set an array of red and green to visually indicate a scale from bad to good.
+ */
+@property (copy, nullable) NSArray<UIColor *> *gradientColors;
+
+/**
+ Indicates the position of gradient stops for the colors specified in `gradientColors`.
+ Gradient stops are specified as values between 0 and 1. The values must be monotonically
+ increasing.
  
  If nil, the stops are spread uniformly across the range. Defaults to nil.
  */

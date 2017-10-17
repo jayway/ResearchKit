@@ -52,6 +52,11 @@ typedef NS_ENUM(NSInteger, ORKQuestionType) {
     ORKQuestionTypeScale,
     
     /**
+     Same as ORKQuestionTypeScale but with modified UI fitting Actiwise CAT-
+     */
+    ORKQuestionTypeCATScale,
+    
+    /**
      In a single choice question, the participant can pick only one predefined option.
      */
     ORKQuestionTypeSingleChoice,

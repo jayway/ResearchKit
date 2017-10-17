@@ -565,6 +565,7 @@ typedef NS_ENUM(NSInteger, ORKQuestionSection) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         typeAndCellMapping = @{@(ORKQuestionTypeScale): [ORKSurveyAnswerCellForScale class],
+                               @(ORKQuestionTypeCATScale): [ORKSurveyAnswerCellForCATScale class],
                                @(ORKQuestionTypeDecimal): [ORKSurveyAnswerCellForNumber class],
                                @(ORKQuestionTypeText): [ORKSurveyAnswerCellForText class],
                                @(ORKQuestionTypeTimeOfDay): [ORKSurveyAnswerCellForPicker class],

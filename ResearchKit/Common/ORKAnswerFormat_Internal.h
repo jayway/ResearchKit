@@ -62,6 +62,7 @@ ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKNumericAnswerFormat)
 ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKScaleAnswerFormat)
 ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKContinuousScaleAnswerFormat)
 ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKTextScaleAnswerFormat)
+ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKCATScaleAnswerFormat)
 ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKTextAnswerFormat)
 ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKTimeIntervalAnswerFormat)
 ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKHeightAnswerFormat)
@@ -157,6 +158,24 @@ ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKHeightAnswerFormat)
 
 @end
 
+@protocol ORKCATScaleAnswerFormatProvider <NSObject>
+
+- (nullable NSNumber *)minimumNumber;
+- (nullable NSNumber *)maximumNumber;
+- (nullable id)defaultAnswer;
+- (nullable NSString *)localizedStringForNumber:(nullable NSNumber *)number;
+- (NSInteger)numberOfSteps;
+- (nullable NSNumber *)normalizedValueForNumber:(nullable NSNumber *)number;
+- (BOOL)isVertical;
+- (NSString *)maximumValueDescription;
+- (NSString *)minimumValueDescription;
+- (UIImage *)maximumImage;
+- (UIImage *)minimumImage;
+- (nullable NSArray<UIColor *> *)gradientColors;
+- (nullable NSArray<NSNumber *> *)gradientLocations;
+
+@end
+
 
 @interface ORKScaleAnswerFormat () <ORKScaleAnswerFormatProvider>
 
@@ -169,6 +188,10 @@ ORK_DESIGNATE_CODING_AND_SERIALIZATION_INITIALIZERS(ORKHeightAnswerFormat)
 
 
 @interface ORKTextScaleAnswerFormat () <ORKTextScaleAnswerFormatProvider>
+
+@end
+
+@interface ORKCATScaleAnswerFormat () <ORKCATScaleAnswerFormatProvider>
 
 @end
 

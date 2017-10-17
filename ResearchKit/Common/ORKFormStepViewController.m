@@ -563,6 +563,8 @@
             
             BOOL scale = (answerFormat.questionType == ORKQuestionTypeScale);
             
+            BOOL actiwiseScale = (answerFormat.questionType == ORKQuestionTypeCATScale);
+            
             // Items require individual section
             if (multiCellChoices || multilineTextEntry || scale) {
                 // Add new section
@@ -830,6 +832,11 @@
                     
                 case ORKQuestionTypeScale: {
                     class = [ORKFormItemScaleCell class];
+                    break;
+                }
+                    
+                case ORKQuestionTypeCATScale: {
+                    class = [ORKFormItemScaleCell class];  //TODO ActiwiseFormItemScaleCell
                     break;
                 }
                     

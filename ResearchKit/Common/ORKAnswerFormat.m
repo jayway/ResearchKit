@@ -64,6 +64,7 @@ NSString *ORKQuestionTypeString(ORKQuestionType questionType) {
     switch (questionType) {
             SQT_CASE(None);
             SQT_CASE(Scale);
+            SQT_CASE(CATScale);
             SQT_CASE(SingleChoice);
             SQT_CASE(MultipleChoice);
             SQT_CASE(MultiplePicker);
@@ -1869,6 +1870,226 @@ static NSArray *ork_processTextChoices(NSArray<ORKTextChoice *> *textChoices) {
 }
 
 @end
+
+
+//TODO: change to actiwise UI
+#pragma mark - ORKCATScaleAnswerFormat
+
+@implementation ORKCATScaleAnswerFormat {
+    NSNumberFormatter *_numberFormatter;
+}
+
+- (Class)questionResultClass {
+    return [ORKScaleQuestionResult class];
+}
+
++ (instancetype)new {
+    ORKThrowMethodUnavailableException();
+}
+
+- (instancetype)init {
+    ORKThrowMethodUnavailableException();
+}
+
+- (instancetype)initWithMaximumValue:(NSInteger)maximumValue
+                        minimumValue:(NSInteger)minimumValue
+                        defaultValue:(NSInteger)defaultValue
+                                step:(NSInteger)step
+                            vertical:(BOOL)vertical
+             maximumValueDescription:(nullable NSString *)maximumValueDescription
+             minimumValueDescription:(nullable NSString *)minimumValueDescription {
+    self = [super init];
+    if (self) {
+        _minimum = minimumValue;
+        _maximum = maximumValue;
+        _defaultValue = defaultValue;
+        _step = step;
+        _vertical = vertical;
+        _maximumValueDescription = maximumValueDescription;
+        _minimumValueDescription = minimumValueDescription;
+        
+        [self validateParameters];
+    }
+    return self;
+}
+
+- (instancetype)initWithMaximumValue:(NSInteger)maximumValue
+                        minimumValue:(NSInteger)minimumValue
+                        defaultValue:(NSInteger)defaultValue
+                                step:(NSInteger)step
+                            vertical:(BOOL)vertical {
+    return [self initWithMaximumValue:maximumValue
+                         minimumValue:minimumValue
+                         defaultValue:defaultValue
+                                 step:step
+                             vertical:vertical
+              maximumValueDescription:nil
+              minimumValueDescription:nil];
+}
+
+- (instancetype)initWithMaximumValue:(NSInteger)maximumValue
+                        minimumValue:(NSInteger)minimumValue
+                        defaultValue:(NSInteger)defaultValue
+                                step:(NSInteger)step {
+    return [self initWithMaximumValue:maximumValue
+                         minimumValue:minimumValue
+                         defaultValue:defaultValue
+                                 step:step
+                             vertical:NO
+              maximumValueDescription:nil
+              minimumValueDescription:nil];
+}
+
+- (NSNumber *)minimumNumber {
+    return @(_minimum);
+}
+- (NSNumber *)maximumNumber {
+    return @(_maximum);
+}
+- (NSNumber *)defaultAnswer {
+    if ( _defaultValue > _maximum || _defaultValue < _minimum) {
+        return nil;
+    }
+    
+    NSInteger integer = round( (double)( _defaultValue - _minimum ) / (double)_step ) * _step + _minimum;
+    
+    return @(integer);
+}
+- (NSString *)localizedStringForNumber:(NSNumber *)number {
+    return [self.numberFormatter stringFromNumber:number];
+}
+
+- (NSArray<ORKTextChoice *> *)textChoices {
+    return nil;
+}
+
+- (NSNumberFormatter *)numberFormatter {
+    if (!_numberFormatter) {
+        _numberFormatter = [[NSNumberFormatter alloc] init];
+        _numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+        _numberFormatter.locale = [NSLocale autoupdatingCurrentLocale];
+        _numberFormatter.maximumFractionDigits = 0;
+    }
+    return _numberFormatter;
+}
+
+- (NSInteger)numberOfSteps {
+    return (_maximum - _minimum) / _step;
+}
+
+- (NSNumber *)normalizedValueForNumber:(NSNumber *)number {
+    return @(number.integerValue);
+}
+
+- (void)validateParameters {
+    [super validateParameters];
+    
+    const NSInteger ORKScaleAnswerFormatMinimumStepSize = 1;
+    const NSInteger ORKScaleAnswerFormatMinimumStepCount = 1;
+    const NSInteger ORKScaleAnswerFormatMaximumStepCount = 13;
+    
+    const NSInteger ORKScaleAnswerFormatValueLowerbound = -10000;
+    const NSInteger ORKScaleAnswerFormatValueUpperbound = 10000;
+    
+    if (_maximum < _minimum) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"Expect maximumValue larger than minimumValue"] userInfo:nil];
+    }
+    
+    if (_step < ORKScaleAnswerFormatMinimumStepSize) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:[NSString stringWithFormat:@"Expect step value not less than than %@.", @(ORKScaleAnswerFormatMinimumStepSize)]
+                                     userInfo:nil];
+    }
+    
+    NSInteger mod = (_maximum - _minimum) % _step;
+    if (mod != 0) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:[NSString stringWithFormat:@"Expect the difference between maximumValue and minimumValue is divisible by step value"] userInfo:nil];
+    }
+    
+    NSInteger steps = (_maximum - _minimum) / _step;
+    if (steps < ORKScaleAnswerFormatMinimumStepCount || steps > ORKScaleAnswerFormatMaximumStepCount) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:[NSString stringWithFormat:@"Expect the total number of steps between minimumValue and maximumValue more than %@ and no more than %@.", @(ORKScaleAnswerFormatMinimumStepCount), @(ORKScaleAnswerFormatMaximumStepCount)]
+                                     userInfo:nil];
+    }
+    
+    if (_minimum < ORKScaleAnswerFormatValueLowerbound) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:[NSString stringWithFormat:@"minimumValue should not less than %@", @(ORKScaleAnswerFormatValueLowerbound)]
+                                     userInfo:nil];
+    }
+    
+    if (_maximum > ORKScaleAnswerFormatValueUpperbound) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:[NSString stringWithFormat:@"maximumValue should not more than %@", @(ORKScaleAnswerFormatValueUpperbound)]
+                                     userInfo:nil];
+    }
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        ORK_DECODE_INTEGER(aDecoder, maximum);
+        ORK_DECODE_INTEGER(aDecoder, minimum);
+        ORK_DECODE_INTEGER(aDecoder, step);
+        ORK_DECODE_INTEGER(aDecoder, defaultValue);
+        ORK_DECODE_BOOL(aDecoder, vertical);
+        ORK_DECODE_OBJ(aDecoder, maximumValueDescription);
+        ORK_DECODE_OBJ(aDecoder, minimumValueDescription);
+        ORK_DECODE_IMAGE(aDecoder, maximumImage);
+        ORK_DECODE_IMAGE(aDecoder, minimumImage);
+        ORK_DECODE_OBJ_ARRAY(aDecoder, gradientColors, UIColor);
+        ORK_DECODE_OBJ_ARRAY(aDecoder, gradientLocations, NSNumber);
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [super encodeWithCoder:aCoder];
+    ORK_ENCODE_INTEGER(aCoder, maximum);
+    ORK_ENCODE_INTEGER(aCoder, minimum);
+    ORK_ENCODE_INTEGER(aCoder, step);
+    ORK_ENCODE_INTEGER(aCoder, defaultValue);
+    ORK_ENCODE_BOOL(aCoder, vertical);
+    ORK_ENCODE_OBJ(aCoder, maximumValueDescription);
+    ORK_ENCODE_OBJ(aCoder, minimumValueDescription);
+    ORK_ENCODE_IMAGE(aCoder, maximumImage);
+    ORK_ENCODE_IMAGE(aCoder, minimumImage);
+    ORK_ENCODE_OBJ(aCoder, gradientColors);
+    ORK_ENCODE_OBJ(aCoder, gradientLocations);
+}
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+- (BOOL)isEqual:(id)object {
+    BOOL isParentSame = [super isEqual:object];
+    
+    __typeof(self) castObject = object;
+    return (isParentSame &&
+            (_maximum == castObject.maximum) &&
+            (_minimum == castObject.minimum) &&
+            (_step == castObject.step) &&
+            (_defaultValue == castObject.defaultValue) &&
+            ORKEqualObjects(self.maximumValueDescription, castObject.maximumValueDescription) &&
+            ORKEqualObjects(self.minimumValueDescription, castObject.minimumValueDescription) &&
+            ORKEqualObjects(self.maximumImage, castObject.maximumImage) &&
+            ORKEqualObjects(self.minimumImage, castObject.minimumImage) &&
+            ORKEqualObjects(self.gradientColors, castObject.gradientColors) &&
+            ORKEqualObjects(self.gradientLocations, castObject.gradientLocations));
+}
+
+- (ORKQuestionType)questionType {
+    return ORKQuestionTypeCATScale;
+}
+
+- (NSString *)stringForAnswer:(id)answer {
+    return [self localizedStringForNumber:answer];
+}
+
+@end
+
 
 
 #pragma mark - ORKContinuousScaleAnswerFormat

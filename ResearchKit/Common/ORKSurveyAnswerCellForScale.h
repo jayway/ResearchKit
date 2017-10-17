@@ -39,4 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface ORKSurveyAnswerCellForCATScale : ORKSurveyAnswerCell
+
+@end
+
 NS_ASSUME_NONNULL_END

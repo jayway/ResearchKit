@@ -110,3 +110,80 @@
 }
 
 @end
+
+
+
+
+
+
+@interface ORKSurveyAnswerCellForCATScale () <ORKScaleSliderViewDelegate>
+
+@property (nonatomic, strong) ORKScaleSliderView *sliderView;
+@property (nonatomic, strong) id<ORKScaleAnswerFormatProvider> formatProvider;
+
+@end
+
+
+@implementation ORKSurveyAnswerCellForCATScale
+
+- (id<ORKScaleAnswerFormatProvider>)formatProvider {
+    if (_formatProvider == nil) {
+        _formatProvider = (id<ORKScaleAnswerFormatProvider>)[self.step impliedAnswerFormat];
+    }
+    return _formatProvider;
+}
+
+- (void)prepareView {
+    [super prepareView];
+    
+    id<ORKScaleAnswerFormatProvider> formatProvider = self.formatProvider;
+    
+    if (_sliderView == nil) {
+        _sliderView = [[ORKScaleSliderView alloc] initWithFormatProvider:formatProvider delegate:self];
+        
+        [self addSubview:_sliderView];
+        
+        self.sliderView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSDictionary *views = @{ @"sliderView": _sliderView };
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[sliderView]|"
+                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                     metrics:nil
+                                                                       views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[sliderView]|"
+                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                     metrics:nil
+                                                                       views:views]];
+        
+        // Get a full width layout
+        NSLayoutConstraint *widthConstraint = [self.class fullWidthLayoutConstraint:_sliderView];
+        [self addConstraints:@[widthConstraint]];
+    }
+    
+    [self answerDidChange];
+}
+
+- (void)answerDidChange {
+    id<ORKScaleAnswerFormatProvider> formatProvider = self.formatProvider;
+    id answer = self.answer;
+    if (answer && answer != ORKNullAnswerValue()) {
+        [_sliderView setCurrentAnswerValue:answer];
+    } else {
+        if (answer == nil && [formatProvider defaultAnswer]) {
+            [self.sliderView setCurrentAnswerValue:[formatProvider defaultAnswer]];
+            [self ork_setAnswer:self.sliderView.currentAnswerValue];
+        } else {
+            [self.sliderView setCurrentAnswerValue:nil];
+        }
+    }
+}
+
+- (NSArray *)suggestedCellHeightConstraintsForView:(UIView *)view {
+    return @[];
+}
+
+- (void)scaleSliderViewCurrentValueDidChange:(ORKScaleSliderView *)sliderView {
+    [self ork_setAnswer:sliderView.currentAnswerValue];
+}
+
+@end
+
