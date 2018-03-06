@@ -779,6 +779,16 @@ ORK_CLASS_AVAILABLE
  */
 @property (readonly, getter=isVertical) BOOL vertical;
 
+/**
+ A localized label to describe the maximum value of the scale.
+ */
+@property (copy, nullable) NSString *maximumValueDescription;
+
+/**
+ A localized label to describe the minimum value of the scale.
+ */
+@property (copy, nullable) NSString *minimumValueDescription;
+
 @end
 
 

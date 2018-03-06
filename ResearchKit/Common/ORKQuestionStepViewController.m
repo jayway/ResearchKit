@@ -39,6 +39,7 @@
 #import "ORKSurveyAnswerCellForText.h"
 #import "ORKSurveyAnswerCellForPicker.h"
 #import "ORKSurveyAnswerCellForImageSelection.h"
+#import "ORKSurveyAnswerCellForImageSelectionWithScaleLabels.h"
 #import "ORKSurveyAnswerCellForLocation.h"
 #import "ORKTableContainerView.h"
 #import "ORKTextChoiceCellGroup.h"
@@ -583,7 +584,7 @@ typedef NS_ENUM(NSInteger, ORKQuestionSection) {
     Class class = typeAndCellMapping[@(self.questionStep.questionType)];
     
     if ([self.questionStep isFormatChoiceWithImageOptions]) {
-        class = [ORKSurveyAnswerCellForImageSelection class];
+        class = [ORKSurveyAnswerCellForImageSelectionWithScaleLabels class];
     } else if ([self.questionStep isFormatTextfield]) {
         // Override for single-line text entry
         class = [ORKSurveyAnswerCellForTextField class];

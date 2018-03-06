@@ -121,6 +121,8 @@
 		25ECC0A41AFBDD2700F3D63B /* ORKReactionTimeStimulusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25ECC0A21AFBDD2700F3D63B /* ORKReactionTimeStimulusView.m */; };
 		2EBFE11D1AE1B32D00CB8254 /* ORKUIViewAccessibilityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFE11C1AE1B32D00CB8254 /* ORKUIViewAccessibilityTests.m */; };
 		2EBFE1201AE1B74100CB8254 /* ORKVoiceEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFE11F1AE1B74100CB8254 /* ORKVoiceEngineTests.m */; };
+		4F8C5655204EA01B0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8C5653204EA01A0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.m */; };
+		4F8C5656204EA01B0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8C5654204EA01A0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.h */; };
 		6146D0A31B84A91E0068491D /* ORKLineGraphAccessibilityElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 6146D0A11B84A91E0068491D /* ORKLineGraphAccessibilityElement.h */; };
 		6146D0A41B84A91E0068491D /* ORKLineGraphAccessibilityElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6146D0A21B84A91E0068491D /* ORKLineGraphAccessibilityElement.m */; };
 		618DA04E1A93D0D600E63AA8 /* ORKAccessibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 618DA0481A93D0D600E63AA8 /* ORKAccessibility.h */; };
@@ -763,6 +765,8 @@
 		2EBFE11C1AE1B32D00CB8254 /* ORKUIViewAccessibilityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKUIViewAccessibilityTests.m; sourceTree = "<group>"; };
 		2EBFE11E1AE1B68800CB8254 /* ORKVoiceEngine_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ORKVoiceEngine_Internal.h; sourceTree = "<group>"; };
 		2EBFE11F1AE1B74100CB8254 /* ORKVoiceEngineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKVoiceEngineTests.m; sourceTree = "<group>"; };
+		4F8C5653204EA01A0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKSurveyAnswerCellForImageSelectionWithScaleLabels.m; sourceTree = "<group>"; };
+		4F8C5654204EA01A0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKSurveyAnswerCellForImageSelectionWithScaleLabels.h; sourceTree = "<group>"; };
 		6146D0A11B84A91E0068491D /* ORKLineGraphAccessibilityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKLineGraphAccessibilityElement.h; sourceTree = "<group>"; };
 		6146D0A21B84A91E0068491D /* ORKLineGraphAccessibilityElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORKLineGraphAccessibilityElement.m; sourceTree = "<group>"; };
 		618DA0481A93D0D600E63AA8 /* ORKAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORKAccessibility.h; sourceTree = "<group>"; };
@@ -2143,6 +2147,8 @@
 				866F86001A96CBF3007B282C /* ORKSurveyAnswerCell.m */,
 				86C40BC51A8D7C5C00081FAC /* ORKSurveyAnswerCellForImageSelection.h */,
 				86C40BC61A8D7C5C00081FAC /* ORKSurveyAnswerCellForImageSelection.m */,
+				4F8C5654204EA01A0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.h */,
+				4F8C5653204EA01A0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.m */,
 				86C40BC71A8D7C5C00081FAC /* ORKSurveyAnswerCellForNumber.h */,
 				86C40BC81A8D7C5C00081FAC /* ORKSurveyAnswerCellForNumber.m */,
 				86C40BC91A8D7C5C00081FAC /* ORKSurveyAnswerCellForScale.h */,
@@ -2894,6 +2900,7 @@
 				B11C549F1A9EF4A700265E61 /* ORKConsentSharingStepViewController.h in Headers */,
 				BC4A213F1C85FC0000BFC271 /* ORKBarGraphChartView.h in Headers */,
 				86C40D621A8D7C5C00081FAC /* ORKQuestionStep_Internal.h in Headers */,
+				4F8C5656204EA01B0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.h in Headers */,
 				86C40D641A8D7C5C00081FAC /* ORKQuestionStepViewController.h in Headers */,
 				10BAA2CA1B5FCB4F004FE478 /* ORKProgressView.h in Headers */,
 				BCB6E6601B7D534C000D5B34 /* ORKLineGraphChartView.h in Headers */,
@@ -3533,6 +3540,7 @@
 				FF5051F11D66908C0065E677 /* ORKNavigablePageStep.m in Sources */,
 				86C40C861A8D7C5C00081FAC /* ORKActiveStepTimer.m in Sources */,
 				242C9E061BBDFDAC0088B7F4 /* ORKVerificationStep.m in Sources */,
+				4F8C5655204EA01B0086ADCF /* ORKSurveyAnswerCellForImageSelectionWithScaleLabels.m in Sources */,
 				B11C549B1A9EEF8800265E61 /* ORKConsentSharingStep.m in Sources */,
 				FF0CB38B1FD5C4C3002D838C /* ORKWebViewStepResult.m in Sources */,
 				86C40DE01A8D7C5C00081FAC /* ORKVerticalContainerView.m in Sources */,

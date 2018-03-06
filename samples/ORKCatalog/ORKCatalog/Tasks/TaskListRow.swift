@@ -860,10 +860,13 @@ enum TaskListRow: Int, CustomStringConvertible {
         ]
         
         let answerFormat1 = ORKAnswerFormat.choiceAnswerFormat(with: imageChoces)
+        answerFormat1.maximumValueDescription = "Even longer long string for describing the maximum value"
+        answerFormat1.minimumValueDescription = "Very long string for describing the minimum value"
         
         let questionStep1 = ORKQuestionStep(identifier: String(describing:Identifier.imageChoiceQuestionStep1), title: exampleQuestionText, answer: answerFormat1)
 
         questionStep1.text = exampleDetailText
+        
 
         let answerFormat2 = ORKAnswerFormat.choiceAnswerFormat(with: imageChoces, style: .singleChoice, vertical: true)
         
