@@ -93,11 +93,11 @@
     NSMutableArray *constraints = [NSMutableArray new];
     
     NSDictionary *views = @{ @"selectionView": _selectionView, @"scaleDescription" : _rangeDescriptionStack };
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scaleDescription][selectionView]|"
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scaleDescription]-(20)-[selectionView]|"
                                                                              options:NSLayoutFormatDirectionLeadingToTrailing
                                                                              metrics:nil
                                                                                views:views]];
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[scaleDescription]-|"
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[scaleDescription]-(20)-|"
                                                                              options:NSLayoutFormatDirectionLeadingToTrailing
                                                                              metrics:nil
                                                                                views:views]];
