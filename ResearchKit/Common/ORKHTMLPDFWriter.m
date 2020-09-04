@@ -34,6 +34,8 @@
 
 #import "ORKHelpers_Internal.h"
 
+#import "WebKit/WebKit.h"
+
 
 #define ORKPPI 72
 #define ORKSizeMakeWithPPI(width, height) CGSizeMake(width * ORKPPI, height * ORKPPI)
@@ -47,13 +49,13 @@ static const CGFloat LetterHeight = 11.0f;
 
 
 
-@interface ORKHTMLPDFWriter () <UIWebViewDelegate> {
+@interface ORKHTMLPDFWriter () <WKUIDelegate> {
     id _selfRetain;
 }
 
 @property (nonatomic) CGSize pageSize;
 @property (nonatomic) UIEdgeInsets pageMargins;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) NSData *data;
 @property (nonatomic, copy) NSError *error;
 @property (nonatomic, copy) void (^completionBlock)(NSData *data, NSError *error);
@@ -75,8 +77,8 @@ static const CGFloat PageEdge = 72.0 / 4;
     _data = nil;
     _error = nil;
     
-    self.webView = [[UIWebView alloc] init];
-    self.webView.delegate = self;
+    self.webView = [[WKWebView alloc] init];
+    self.webView.UIDelegate = self;
     [self.webView loadHTMLString:html baseURL:ORKCreateRandomBaseURL()];
     
     _selfRetain = self;
@@ -141,22 +143,33 @@ static const CGFloat PageEdge = 72.0 / 4;
     return pageSize;
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - WKUIDelegate
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSString *readyState = [webView stringByEvaluatingJavaScriptFromString:@"document.readyState"];
-    BOOL complete = [readyState isEqualToString:@"complete"];
-    
-    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeout) object:nil];
-    
-    if (complete) {
-        [self savePDF];
-    } else {
-        [self performSelector:@selector(timeout) withObject:nil afterDelay:1.0f];
-    }
+- (void)webViewDidFinishLoad:(WKWebView *)webView {
+    [webView evaluateJavaScript:(NSString *)@"document.readyState"
+              completionHandler:^(id result, NSError *error) {
+            if (error == nil) {
+                if (result != nil) {
+                    NSString *readyState = [NSString stringWithFormat:@"%@", result];
+
+                    BOOL complete = [readyState isEqualToString:@"complete"];
+                    
+                    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeout) object:nil];
+                    
+                    if (complete) {
+                        [self savePDF];
+                    } else {
+                        [self performSelector:@selector(timeout) withObject:nil afterDelay:1.0f];
+                    }
+                }
+            } else {
+                NSLog(@"evaluateJavaScript error : %@", error.localizedDescription);
+            }
+        }
+     ];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView didFailLoadWithError:(NSError *)error {
     [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeout) object:nil];
     
     _error = error;
